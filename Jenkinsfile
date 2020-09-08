@@ -23,8 +23,8 @@ pipeline {
 			}
 		}
 		stage('Test') {
-			input 'Do you approve deployment?'
 			steps{
+				input message: 'Do you want to continue deployment?'
 				ansiColor("xterm") {
 					echo "Test..."
 					sh 'ls -a'
@@ -33,6 +33,7 @@ pipeline {
 		}
 		stage('Online') {
 			steps{
+				input message: 'Do you want to continue deployment?'
 				ansiColor("xterm") {
 					echo "Online"
 					sh 'ls -a'
