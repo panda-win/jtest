@@ -1,8 +1,11 @@
 pipeline {
 	agent any
+	tools {
+		go 'go-1.13'
+	}
 	parameters {
 		choice(
-			choices: ['test','dev','pro'],
+			choices: ['test','pro'],
 			description: '',
 			name: 'RUN_MODE'
 		)
@@ -10,34 +13,26 @@ pipeline {
 	stages {
 		stage('StaticCheck') {
 			steps{
-				ansiColor("xterm") {
-					sh 'echo $PWD'	
-				}
+				sh 'echo $PWD'	
 			}
 		}
 		stage('Build') {
 			steps{
-				ansiColor("xterm") {
-					sh 'echo $PWD'
-				}
+				sh 'echo $PWD'
+				sh 'go build -o run main.go'
 			}
 		}
 		stage('Test') {
 			steps{
 				input message: 'Do you want to continue deployment?'
-				ansiColor("xterm") {
-					echo "Test..."
-					sh 'ls -a'
-				}
+				echo "Test..."
 			}
 		}
 		stage('Online') {
 			steps{
 				input message: 'Do you want to continue deployment?'
-				ansiColor("xterm") {
-					echo "Online"
-					sh 'ls -a'
-				}
+				echo "Online..."
+				sh 'ls -a'
 			}
 		}
 	}
