@@ -23,8 +23,10 @@ pipeline {
 			}
 		}
 		stage('Test') {
+			input 'Do you approve deployment?'
 			steps{
 				ansiColor("xterm") {
+					echo "Test..."
 					sh 'ls -a'
 				}
 			}
@@ -32,6 +34,7 @@ pipeline {
 		stage('Online') {
 			steps{
 				ansiColor("xterm") {
+					echo "Online"
 					sh 'ls -a'
 				}
 			}
