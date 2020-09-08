@@ -19,7 +19,7 @@ pipeline {
 			steps{
 				ansiColor("xterm") {
 					sh 'echo $PWD'
-					sh 'make build'
+					sh 'go build -o run main.go'
 				}
 			}
 		}
