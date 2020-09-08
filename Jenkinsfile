@@ -1,5 +1,10 @@
 pipeline {
 	agent any
+	
+	tools {
+		go 'go-1.13'
+	}
+
 	parameters {
 		choice(
 			choices: ['test','pro'],
@@ -10,26 +15,26 @@ pipeline {
 	stages {
 		stage('StaticCheck') {
 			steps{
-				sh 'ls -a'
-				sh 'echo $PWD'	
+				echo 'start static check'
 			}
 		}
 		stage('Build') {
 			steps{
-				sh 'echo $PWD'
+				sh 'go build -o run main.go'
 			}
 		}
 		stage('Test') {
 			steps{
 				input message: 'Do you want to continue deployment?'
-				echo "Test..."
+				echo 'Test...'
+				sh './run'
 			}
 		}
 		stage('Online') {
 			steps{
 				input message: 'Do you want to continue deployment?'
 				echo "Online..."
-				sh 'ls -a'
+				sh './run'
 			}
 		}
 	}
